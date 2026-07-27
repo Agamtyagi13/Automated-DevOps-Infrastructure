@@ -1,4 +1,4 @@
-
+## commands used in devops for the installations of the tools
 docker -
  
  sudo apt-get update
