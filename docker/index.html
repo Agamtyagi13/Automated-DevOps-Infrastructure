@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Simple Page</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 40px 32px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+
+  .card h1 {
+    color: #2575fc;
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+
+  .card p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #2575fc;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: background 0.2s ease;
+  }
+
+  nav a:hover {
+    background: #eef3ff;
+  }
+
+  button {
+    background: #2575fc;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+
+  button:hover {
+    background: #1a5edb;
+    transform: translateY(-2px);
+  }
+
+  footer {
+    margin-top: 24px;
+    font-size: 0.8rem;
+    color: #999;
+  }
+</style>
+</head>
+<body>
+
+  <div class="card">
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+
+    <h1>Welcome 👋</h1>
+    <p>This is a simple web page built with just HTML and CSS. Feel free to use it as a starting point for your own project.</p>
+
+    <button onclick="alert('Hello there!')">Click Me</button>
+
+    <footer>
+      &copy; 2026 My Simple Page. All rights reserved.
+    </footer>
+  </div>
+
+</body>
+</html>
