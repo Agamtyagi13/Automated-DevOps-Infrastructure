@@ -375,3 +375,34 @@ docker rmi xqora-nginx:v1
 ## Conclusion
 
 In this phase, the application was successfully containerized using Docker. The container was configured with networking, resource limits, health monitoring, and automatic restart policies, providing a production-oriented Docker setup that serves as the foundation for the next phase, where the same application will be deployed to Kubernetes.
+
+Developer
+     │
+     │ writes
+     ▼
+Dockerfile
+     │
+     │ git push
+     ▼
+GitHub
+     │                               Relationship between docker and jenkins (jenkins uses dockerfile build the image)
+     ▼
+Jenkins
+     │
+docker build
+     │
+(uses Dockerfile)
+     ▼
+Docker Image
+     │
+docker push
+     ▼
+Docker Hub
+     │
+kubectl apply
+     ▼
+Kubernetes
+     │
+docker pull
+     ▼
+Running Pod
