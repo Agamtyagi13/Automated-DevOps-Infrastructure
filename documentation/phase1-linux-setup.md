@@ -45,8 +45,8 @@ sudo adduser monitor
 
 ### Grant Sudo Access
 
-#bas
-h
+#bash
+
 sudo usermod -aG sudo devops
 
 
@@ -69,6 +69,7 @@ sudo hostnamectl set-hostname devops-lab
 #bash
 
 sudo apt install unattended-upgrades -y
+
 sudo dpkg-reconfigure unattended-upgrades
 
 
