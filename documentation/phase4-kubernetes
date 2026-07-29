@@ -103,4 +103,8 @@ Performed rollbacks using both Kubernetes and Helm.
 Verified application health and deployment status.
 Scaled the application manually using Kubernetes.
 Used Docker Hub as the image registry for Kubernetes deployments.
-Gained practical experience with Helm-based application lifecycle management.
+Gained practical experience with Helm-based application lifecycle management. 
+
+
+#### i used helm chart to automate the task because helm is a package manager for kubernetes it provide all the yaml files template only 
+changes we have to do is in values.yaml also helm changes our time and also nginx doest required configmap.yaml and secret.yaml as of now
