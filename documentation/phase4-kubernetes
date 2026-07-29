@@ -1,0 +1,106 @@
+Phase 4: Kubernetes Deployment with Helm
+Objective
+
+The objective of this phase was to deploy the Dockerized NGINX application on a local Kubernetes cluster using Helm, enabling version-controlled deployments, simplified application management, rolling updates, rollbacks, and scaling.
+
+Commands Executed
+1. Create Helm Chart
+helm create nginx
+
+Creates the basic Helm chart structure.
+
+2. Validate the Helm Chart
+helm lint nginx
+
+Checks the Helm chart for syntax and configuration errors.
+
+3. Preview Kubernetes Manifests
+helm template nginx ./nginx
+
+Renders the Kubernetes manifests without deploying them.
+
+4. Install the Application
+helm install nginx ./nginx
+
+Deploys the application to the Kubernetes cluster.
+
+5. Verify Deployment
+kubectl get all
+
+Displays all Kubernetes resources.
+
+kubectl get pods
+
+Lists running Pods.
+
+kubectl get deployment
+
+Displays Deployment details.
+
+kubectl get svc
+
+Shows Services.
+
+kubectl get hpa
+
+Displays Horizontal Pod Autoscaler status.
+
+6. Build Docker Image
+docker build -t agamtyagi/xqora-nginx:v2 .
+
+Builds the application image.
+
+7. Push Image to Docker Hub
+docker push agamtyagi/xqora-nginx:v2
+
+Uploads the image to Docker Hub for Kubernetes to pull.
+
+8. Upgrade Application
+helm upgrade nginx ./nginx
+
+Applies configuration or image updates without reinstalling the application.
+
+9. Check Rollout Status
+kubectl rollout status deployment/nginx
+
+Monitors the progress of a rolling update.
+
+10. View Rollout History
+kubectl rollout history deployment/nginx
+
+Displays previous deployment revisions.
+
+11. Rollback Deployment
+kubectl rollout undo deployment/nginx
+
+Reverts the Deployment to the previous revision.
+
+12. View Helm Release History
+helm history nginx
+
+Displays all Helm release revisions.
+
+13. Rollback Helm Release
+helm rollback nginx 1
+
+Restores the Helm release to revision 1.
+
+14. Manual Scaling
+kubectl scale deployment nginx --replicas=5
+
+Increases the number of application Pods.
+
+15. Verify Scaling
+kubectl get pods
+
+Confirms the updated number of running Pods.
+
+Outcome
+Successfully deployed the application on a local Kubernetes cluster using Helm.
+Managed application deployments through Helm releases.
+Implemented rolling updates for zero-downtime deployments.
+Performed rollbacks using both Kubernetes and Helm.
+Verified application health and deployment status.
+Scaled the application manually using Kubernetes.
+Used Docker Hub as the image registry for Kubernetes deployments.
+Gained practical experience with Helm-based application lifecycle management.
