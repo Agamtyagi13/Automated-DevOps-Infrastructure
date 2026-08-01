@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "agamtyagi/xqora-nginx"
+        IMAGE_TAG  = "v7"
+    }
+
+    stages {
+
+        stage('Checkout Source Code') {
+            steps {
+                git branch: 'main',
+                    credentialsId: 'github_id',
+                    url: 'https://github.com/agamtyagi13/Automated-DevOps-Infrastructure.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                dir('docker') {
+                    sh """
+                    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+                    """
+                }
+            }
+        }
+
+        stage('Load Image into Kind Cluster') {
+            steps {
+                sh """
+                kind load docker-image ${IMAGE_NAME}:${IMAGE_TAG} --name devops
+                """
+            }
+        }
+
+        stage('Update Helm Values') {
+            steps {
+                sh """
+                sed -i 's|tag:.*|tag: ${IMAGE_TAG}|' nginx/values.yaml
+                """
+            }
+        }
+    }
+
+    post {
+
+        success {
+            echo "=================================="
+            echo "Pipeline executed successfully."
+            echo "Application deployed successfully."
+            echo "=================================="
+        }
+
+        failure {
+            echo "=================================="
+            echo "Pipeline failed."
+            echo "Check Jenkins Console Output."
+            echo "=================================="
+        }
+
+        always {
+            sh "docker image prune -f || true"
+        }
+    }
+}
