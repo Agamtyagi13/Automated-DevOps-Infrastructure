@@ -1,0 +1,122 @@
+Started by user Agam Tyagi
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/Agam Tyagi
+[Pipeline] {
+[Pipeline] withEnv (hide)
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout Source Code)
+[Pipeline] git
+The recommended git tool is: NONE
+using credential github_id
+ > git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/Agam Tyagi/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/agamtyagi13/Automated-DevOps-Infrastructure.git # timeout=10
+Fetching upstream changes from https://github.com/agamtyagi13/Automated-DevOps-Infrastructure.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.53.0'
+using GIT_ASKPASS to set credentials 
+ > git fetch --tags --force --progress -- https://github.com/agamtyagi13/Automated-DevOps-Infrastructure.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision f57ae135a6bce6b0e1bf32df1ea4c57245ee7f51 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f f57ae135a6bce6b0e1bf32df1ea4c57245ee7f51 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main f57ae135a6bce6b0e1bf32df1ea4c57245ee7f51 # timeout=10
+Commit message: "delete"
+ > git rev-list --no-walk f57ae135a6bce6b0e1bf32df1ea4c57245ee7f51 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker Image)
+[Pipeline] dir
+Running in /var/lib/jenkins/workspace/Agam Tyagi/docker
+[Pipeline] {
+[Pipeline] sh
++ docker build -t agamtyagi/xqora-nginx:v7 .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon   5.12kB
+
+Step 1/7 : FROM nginx:1.27-alpine
+ ---> 65645c7bb6a0
+Step 2/7 : LABEL maintainer="Agam Tyagi"
+ ---> Running in 86cd9b59ca11
+ ---> Removed intermediate container 86cd9b59ca11
+ ---> e5580162196f
+Step 3/7 : LABEL project="Automated DevOps Infrastructure"
+ ---> Running in ef36bda28cf2
+ ---> Removed intermediate container ef36bda28cf2
+ ---> b9367578a1cc
+Step 4/7 : COPY index.html /usr/share/nginx/html/
+ ---> 9f44cde2ebbd
+Step 5/7 : EXPOSE 80
+ ---> Running in 710ea7f42049
+ ---> Removed intermediate container 710ea7f42049
+ ---> 0a6da06b80a7
+Step 6/7 : HEALTHCHECK --interval=30s   --timeout=5s   --start-period=10s   --retries=3   CMD wget --spider http://localhost || exit 1
+ ---> Running in 326cdaf21cb1
+ ---> Removed intermediate container 326cdaf21cb1
+ ---> cf4f9da5c343
+Step 7/7 : CMD ["nginx", "-g", "daemon off;"]
+ ---> Running in dc146f07289a
+ ---> Removed intermediate container dc146f07289a
+ ---> 3f01db54afd7
+Successfully built 3f01db54afd7
+Successfully tagged agamtyagi/xqora-nginx:v7
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Load Image into Kind Cluster)
+[Pipeline] sh
++ kind load docker-image agamtyagi/xqora-nginx:v7 --name devops
+Image: "agamtyagi/xqora-nginx:v7" with ID "sha256:3f01db54afd796d46294647e57d2aa8af04ea47acfd43ffda5e627d6949ac0c2" not yet present on node "devops-control-plane", loading...
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Update Helm Values)
+[Pipeline] sh
++ sed -i s|tag:.*|tag: v7| nginx/values.yaml
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
++ docker image prune -f
+Deleted Images:
+untagged: sha256:0a6da06b80a7a88a118237fde2e38ac7a9a0261d446ae5f20a959ff393ba84b1
+deleted: sha256:0a6da06b80a7a88a118237fde2e38ac7a9a0261d446ae5f20a959ff393ba84b1
+untagged: sha256:9f44cde2ebbd0c6ca1e15b3c11a461fe7de9f981419dc2998b1e951e583b3018
+deleted: sha256:9f44cde2ebbd0c6ca1e15b3c11a461fe7de9f981419dc2998b1e951e583b3018
+untagged: sha256:b9367578a1cccc410c2b69e05a2dd11e546a05f7789e5d7b2c66be3c4006dfe7
+deleted: sha256:b9367578a1cccc410c2b69e05a2dd11e546a05f7789e5d7b2c66be3c4006dfe7
+untagged: sha256:cf4f9da5c34355a5b228a65951148836cea6be2988163349e8778be624d220bc
+deleted: sha256:cf4f9da5c34355a5b228a65951148836cea6be2988163349e8778be624d220bc
+untagged: sha256:e3c0fafdff3cc408adbf4ebf932a41d2765d1fb3c5fc713acee0eb9c63e1db1c
+deleted: sha256:e3c0fafdff3cc408adbf4ebf932a41d2765d1fb3c5fc713acee0eb9c63e1db1c
+untagged: sha256:e5580162196f718fb646b88dcc933ecbf0377caeaca13c73312e9b9c9acf7545
+deleted: sha256:e5580162196f718fb646b88dcc933ecbf0377caeaca13c73312e9b9c9acf7545
+
+Total reclaimed space: 82.67kB
+[Pipeline] echo
+==================================
+[Pipeline] echo
+Pipeline executed successfully.
+[Pipeline] echo
+Application deployed successfully.
+[Pipeline] echo
+==================================
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
