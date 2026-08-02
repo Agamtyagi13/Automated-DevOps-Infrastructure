@@ -1,4 +1,4 @@
-Phase 8: Centralized Logging using ELK Stack
+Phase 7: Centralized Logging using ELK Stack
 Objective
 
 The objective of this phase is to implement a centralized logging solution for the Kubernetes cluster. Instead of accessing logs from individual pods, all application and cluster logs are collected, processed, stored, and visualized from a single platform. This enables efficient monitoring, debugging, and troubleshooting of applications running in Kubernetes.

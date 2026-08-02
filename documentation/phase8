@@ -1,0 +1,97 @@
+Phase 8 – Security Hardening
+Objective
+
+The objective of this phase is to implement production-level security practices to protect the infrastructure, applications, and Kubernetes cluster from unauthorized access and security vulnerabilities. Security hardening minimizes the attack surface and ensures that only authorized users and services can access system resources.
+
+Introduction
+
+Security is one of the most critical aspects of a production-ready DevOps environment. Modern infrastructure contains multiple components such as Linux servers, Docker containers, Kubernetes clusters, CI/CD pipelines, and cloud services. Securing each component helps maintain confidentiality, integrity, and availability of applications and infrastructure.
+
+Security Measures Implemented
+SSH Key Authentication
+
+SSH key authentication is used instead of password-based authentication to provide secure remote access to Linux servers. This significantly reduces the risk of brute-force attacks.
+
+Firewall Configuration
+
+Firewall rules are configured to allow only required network ports while blocking unnecessary inbound and outbound traffic. This helps prevent unauthorized network access.
+
+Docker Security
+
+Docker containers are configured using security best practices such as:
+
+Running containers as non-root users.
+Limiting container privileges.
+Using official and trusted Docker images.
+Applying resource limits to containers.
+Kubernetes Secrets
+
+Sensitive information such as passwords, API keys, and tokens is securely stored using Kubernetes Secrets instead of embedding them inside application code or configuration files.
+
+Role-Based Access Control (RBAC)
+
+RBAC controls user permissions inside the Kubernetes cluster by assigning specific roles to users and service accounts. This ensures users only have the permissions necessary to perform their tasks.
+
+Principle of Least Privilege (PoLP)
+
+Each user, application, and service is granted only the minimum permissions required to perform its intended function. This minimizes the impact of compromised accounts.
+
+Environment Variables
+
+Application configuration values are managed using environment variables, allowing sensitive information to remain separate from the application source code.
+
+Secret Management
+
+Secrets are centrally managed within Kubernetes to provide secure storage and controlled access to confidential information such as database credentials and authentication tokens.
+
+Benefits
+Secure remote server access.
+Protection against unauthorized access.
+Secure storage of sensitive information.
+Reduced attack surface.
+Improved Kubernetes security.
+Better compliance with production security standards.
+Enhanced infrastructure reliability.
+Outcome
+
+By implementing security hardening measures, the DevOps infrastructure becomes more resilient against security threats. Secure authentication, firewall protection, Kubernetes Secrets, RBAC, and least privilege policies collectively strengthen the overall security posture of the environment and prepare it for production deployment.
+
+## # Generate SSH Key Pair
+ssh-keygen -t rsa -b 4096
+
+# Copy Public Key to Server
+ssh-copy-id user@server-ip
+
+# Verify SSH Login
+ssh user@server-ip
+
+# Enable UFW Firewall
+sudo ufw enable
+
+# Allow Required Ports
+sudo ufw allow 22
+sudo ufw allow 80
+sudo ufw allow 443
+
+# Check Firewall Status
+sudo ufw status
+
+# Create Kubernetes Secret
+kubectl create secret generic app-secret \
+--from-literal=username=admin \
+--from-literal=password=admin123
+
+# View Secrets
+kubectl get secrets
+
+# Create Namespace
+kubectl create namespace production
+
+# View RBAC Resources
+kubectl get roles
+kubectl get rolebindings
+kubectl get clusterroles
+kubectl get clusterrolebindings
+
+# Describe Secret
+kubectl describe secret app-secret
